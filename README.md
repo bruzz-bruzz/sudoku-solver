@@ -75,4 +75,4 @@ npm run preview
 
 ## License
 
-This repository does not include a license file. Add one if you want to share or open-source this project.
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for full details.
