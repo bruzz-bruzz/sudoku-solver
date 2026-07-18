@@ -1,16 +1,16 @@
 import './App.css'
-import Github from './Github.jsx'
-import Toast from './Toast.jsx'
+import Github from './Github'
+import Toast from './Toast'
 import {useState,useEffect} from 'react'
 export default function App(){
-  const [grid,setGrid] = useState(Array.from({length:9},()=>Array(9).fill(0)))
+  const [grid,setGrid] = useState<number[][]>(Array.from({length:9},()=>Array(9).fill(0)))
   const [toast,setToast] = useState({ok:true,msg:''})
   function clearToast(){
     setTimeout(()=>{
       setToast({ok:true,msg:''})
     },3000)
   }
-  function isValid(board,row,col,num){
+  function isValid(board:number[][],row:number,col:number,num:number){
     for(let x=0;x<9;x++){
         if(board[row][x]===num || board[x][col]===num){
             return false;
@@ -26,8 +26,10 @@ export default function App(){
     }
     return true;
 }
-function isValidFull(board){
-  let [r,c,g] = [{},{},{}]
+function isValidFull(board:number[][]){
+  let r: Record<number,Set<number>> = {}
+  let c: Record<number,Set<number>> = {}
+  let g: Record<number,Set<number>> = {}
   for(let i = 0; i < 9; i++){
     r[i] = new Set()
     c[i] = new Set()
@@ -49,14 +51,14 @@ function isValidFull(board){
   setToast({ok:true,msg:"Valid Sudoku!"})
   return true
 }
-function solveHelper(board){
+function solveHelper(board:number[][]){
   let b = board
   solve_sudoku(b)
   setGrid([...b])
   setToast({ok:true,msg:'Sudoku Board Solved!'})
   clearToast()
 }
-function solve_sudoku(board){
+function solve_sudoku(board:number[][]){
     for(let row=0;row<9;row++){
         for(let col=0;col<9;col++){
             if(board[row][col]===0){
@@ -75,7 +77,7 @@ function solve_sudoku(board){
     }
     return true;
 }
-function fill_grid(board){
+function fill_grid(board:number[][]){
     for(let row=0;row<9;row++){
         for(let col=0;col<9;col++){
             if(board[row][col]===0){
@@ -113,16 +115,6 @@ function generate(){
     setToast({ok:true,msg:'Sudoku Board Generated!'})
     clearToast()
     return board
-}
-function visualize(board){
-  let res = ''
-  for(let i = 0; i < 9; i++){
-    for(let y = 0; y < 9; y++){
-      res += board[i][y] === 0 ? ' . ' : ' ' + board[i][y] + ' '
-    }
-    res += '\n'
-  }
-  return res
 }
 useEffect(()=>{
   setGrid(generate())
