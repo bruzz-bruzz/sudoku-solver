@@ -154,10 +154,8 @@ return (
                   setGrid(grid=>{
                     let newGrid = [...grid]
                     newGrid[i][j] = isNaN(val) ? 0 : val
-                    console.log(newGrid)
                     return newGrid
                   })
-                  console.log(grid)
                 }} />
               ))
             )}
